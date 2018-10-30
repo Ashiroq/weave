@@ -385,7 +385,7 @@ func main() {
 		dockerVersion = dockerCli.DockerVersion()
 	}
 
-	checkForUpdates(dockerVersion, router, peers)
+	checkForUpdates(dockerVersion, router, uint(len(peers)+1))
 
 	observeContainers := func(o docker.ContainerObserver) {
 		if dockerCli != nil {
@@ -687,7 +687,7 @@ func determineQuorum(initPeerCountFlag int, router *weave.NetworkRouter) uint {
 	// that resolve to the same peer, in which case the quorum
 	// might be larger than it needs to be.  But the user can
 	// specify it explicitly if that becomes a problem.
-	clusterSize := uint(len(peers) + 1)
+	clusterSize := uint(len(peers))
 	quorum := clusterSize/2 + 1
 	Log.Println("Assuming quorum size of", quorum)
 	return quorum
